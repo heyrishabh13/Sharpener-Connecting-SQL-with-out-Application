@@ -4,10 +4,19 @@ const studentRoutes = require("./routes/studentRoutes");
 
 const app = express();
 
+//Models
+const studentModel = require("./models/students");
+
 app.use(express.json());
 
 app.use("/students", studentRoutes);
 
-app.listen(3000, () => {
-  console.log("Server is running...");
-});
+db.sync({ force: true })
+  .then(() => {
+    app.listen(3000, () => {
+      console.log("Server is running...");
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
